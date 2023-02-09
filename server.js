@@ -1,6 +1,7 @@
 // Include all dependencies
 const express = require('express');
 const mongoose = require('mongoose');
+const db = require('./config/connection')
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -10,4 +11,9 @@ app.use(express.json());
 app.use(express.static('public'));
 app.use(require('./routes'));
 
-// Connect server to mongoose
+// Add connection
+db.once('open', () => {
+    app.listen(PORT, () => {
+      console.log(`API server for ${activity} running on port ${PORT}!`);
+    });
+  });
